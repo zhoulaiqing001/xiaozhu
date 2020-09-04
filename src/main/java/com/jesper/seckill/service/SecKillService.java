@@ -1,7 +1,7 @@
 package com.jesper.seckill.service;
 
 import com.jesper.seckill.bean.OrderInfo;
-import com.jesper.seckill.bean.SeckillOrder;
+import com.jesper.seckill.bean.SecKillOrder;
 import com.jesper.seckill.bean.User;
 import com.jesper.seckill.redis.RedisService;
 import com.jesper.seckill.redis.SeckillKey;
@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by jiangyunxiong on 2018/5/23.
- */
+
 @Service
-public class SeckillService {
+public class SecKillService {
 
     @Autowired
     GoodsService goodsService;
@@ -27,7 +25,7 @@ public class SeckillService {
 
     //保证这三个操作，减库存 下订单 写入秒杀订单是一个事物
     @Transactional
-    public OrderInfo seckill(User user, GoodsVo goods){
+    public OrderInfo secKill(User user, GoodsVo goods){
         //减库存
         boolean success = goodsService.reduceStock(goods);
         if (success){
@@ -39,8 +37,8 @@ public class SeckillService {
         }
     }
 
-    public long getSeckillResult(long userId, long goodsId){
-        SeckillOrder order = orderService.getOrderByUserIdGoodsId(userId, goodsId);
+    public long getSecKillResult(long userId, long goodsId){
+        SecKillOrder order = orderService.getOrderByUserIdGoodsId(userId, goodsId);
         if (order != null){
             return order.getOrderId();
         }else{

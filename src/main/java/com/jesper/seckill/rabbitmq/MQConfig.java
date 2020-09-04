@@ -8,14 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by jiangyunxiong on 2018/5/29.
- *
  * 配置bean
  */
 @Configuration
 public class MQConfig {
 
-    public static final String SECKILL_QUEUE = "seckill.queue";
     public static final String QUEUE = "queue";
     public static final String TOPIC_QUEUE1 = "topic.queue1";
     public static final String TOPIC_QUEUE2 = "topic.queue2";

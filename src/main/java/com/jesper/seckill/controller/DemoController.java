@@ -11,9 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by jiangyunxiong on 2018/5/18.
- */
 @Controller
 @RequestMapping("/demo")
 public class DemoController {

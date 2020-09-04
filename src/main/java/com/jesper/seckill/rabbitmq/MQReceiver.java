@@ -5,7 +5,7 @@ import com.jesper.seckill.bean.User;
 import com.jesper.seckill.redis.RedisService;
 import com.jesper.seckill.service.GoodsService;
 import com.jesper.seckill.service.OrderService;
-import com.jesper.seckill.service.SeckillService;
+import com.jesper.seckill.service.SecKillService;
 import com.jesper.seckill.vo.GoodsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +13,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by jiangyunxiong on 2018/5/29.
- */
 @Service
 public class MQReceiver {
 
@@ -32,12 +29,12 @@ public class MQReceiver {
     OrderService orderService;
 
     @Autowired
-    SeckillService seckillService;
+    SecKillService secKillService;
 
     @RabbitListener(queues=MQConfig.QUEUE)
     public void receive(String message){
         log.info("receive message:"+message);
-        SeckillMessage m = RedisService.stringToBean(message, SeckillMessage.class);
+        SecKillMessage m = RedisService.stringToBean(message, SecKillMessage.class);
         User user = m.getUser();
         long goodsId = m.getGoodsId();
 
@@ -54,7 +51,7 @@ public class MQReceiver {
         }
 
         //减库存 下订单 写入秒杀订单
-        seckillService.seckill(user, goodsVo);
+        secKillService.secKill(user, goodsVo);
     }
 
     @RabbitListener(queues = MQConfig.TOPIC_QUEUE1)

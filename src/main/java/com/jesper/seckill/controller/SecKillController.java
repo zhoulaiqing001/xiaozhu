@@ -1,17 +1,17 @@
 package com.jesper.seckill.controller;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.jesper.seckill.bean.SeckillOrder;
+import com.jesper.seckill.bean.SecKillOrder;
 import com.jesper.seckill.bean.User;
 import com.jesper.seckill.rabbitmq.MQSender;
-import com.jesper.seckill.rabbitmq.SeckillMessage;
+import com.jesper.seckill.rabbitmq.SecKillMessage;
 import com.jesper.seckill.redis.GoodsKey;
 import com.jesper.seckill.redis.RedisService;
 import com.jesper.seckill.result.CodeMsg;
 import com.jesper.seckill.result.Result;
 import com.jesper.seckill.service.GoodsService;
 import com.jesper.seckill.service.OrderService;
-import com.jesper.seckill.service.SeckillService;
+import com.jesper.seckill.service.SecKillService;
 import com.jesper.seckill.vo.GoodsVo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by jiangyunxiong on 2018/5/22.
- */
 @Controller
 @RequestMapping("/seckill")
-public class SeckillController implements InitializingBean {
+public class SecKillController implements InitializingBean {
 
     @Autowired
     GoodsService goodsService;
@@ -40,7 +37,7 @@ public class SeckillController implements InitializingBean {
     OrderService orderService;
 
     @Autowired
-    SeckillService seckillService;
+    SecKillService secKillService;
 
     @Autowired
     RedisService redisService;
@@ -94,15 +91,15 @@ public class SeckillController implements InitializingBean {
             }
         }
         //判断重复秒杀
-        SeckillOrder order = orderService.getOrderByUserIdGoodsId(user.getId(), goodsId);
+        SecKillOrder order = orderService.getOrderByUserIdGoodsId(user.getId(), goodsId);
         if (order != null) {
             return Result.error(CodeMsg.REPEATE_SECKILL);
         }
         //入队
-        SeckillMessage message = new SeckillMessage();
+        SecKillMessage message = new SecKillMessage();
         message.setUser(user);
         message.setGoodsId(goodsId);
-        sender.sendSeckillMessage(message);
+        sender.sendSecKillMessage(message);
         return Result.success(0);//排队中
     }
 
@@ -129,13 +126,12 @@ public class SeckillController implements InitializingBean {
      */
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     @ResponseBody
-    public Result<Long> seckillResult(Model model, User user,
-                                      @RequestParam("goodsId") long goodsId) {
+    public Result<Long> secKillResult(Model model, User user, @RequestParam("goodsId") long goodsId) {
         model.addAttribute("user", user);
         if (user == null) {
             return Result.error(CodeMsg.SESSION_ERROR);
         }
-        long orderId = seckillService.getSeckillResult(user.getId(), goodsId);
+        long orderId = secKillService.getSecKillResult(user.getId(), goodsId);
         return Result.success(orderId);
     }
 }

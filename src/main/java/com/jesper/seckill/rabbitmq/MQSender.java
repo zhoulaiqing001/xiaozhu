@@ -7,9 +7,6 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by jiangyunxiong on 2018/5/29.
- */
 @Service
 public class MQSender {
 
@@ -31,7 +28,7 @@ public class MQSender {
 		amqpTemplate.convertAndSend(MQConfig.TOPIC_EXCHANGE, "topic.key2", msg+"2");
 	}
 
-	public void sendSeckillMessage(SeckillMessage message){
+	public void sendSecKillMessage(SecKillMessage message){
         String msg = RedisService.beanToString(message);
         log.info("send message:"+msg);
         amqpTemplate.convertAndSend(MQConfig.QUEUE, msg);
