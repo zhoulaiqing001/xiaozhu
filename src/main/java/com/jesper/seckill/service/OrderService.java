@@ -1,7 +1,7 @@
 package com.jesper.seckill.service;
 
 import com.jesper.seckill.bean.OrderInfo;
-import com.jesper.seckill.bean.SeckillOrder;
+import com.jesper.seckill.bean.SecKillOrder;
 import com.jesper.seckill.bean.User;
 import com.jesper.seckill.mapper.OrderMapper;
 import com.jesper.seckill.redis.OrderKey;
@@ -25,8 +25,8 @@ public class OrderService {
     @Autowired
     RedisService redisService;
 
-    public SeckillOrder getOrderByUserIdGoodsId(long userId, long goodsId) {
-        return redisService.get(OrderKey.getSeckillOrderByUidGid, "" + userId + "_" + goodsId, SeckillOrder.class);
+    public SecKillOrder getOrderByUserIdGoodsId(long userId, long goodsId) {
+        return redisService.get(OrderKey.getSeckillOrderByUidGid, "" + userId + "_" + goodsId, SecKillOrder.class);
     }
 
     public OrderInfo getOrderById(long orderId) {
@@ -50,13 +50,13 @@ public class OrderService {
         orderInfo.setUserId(user.getId());
         orderMapper.insert(orderInfo);
 
-        SeckillOrder seckillOrder = new SeckillOrder();
-        seckillOrder.setGoodsId(goods.getId());
-        seckillOrder.setOrderId(orderInfo.getId());
-        seckillOrder.setUserId(user.getId());
-        orderMapper.insertSeckillOrder(seckillOrder);
+        SecKillOrder secKillOrder = new SecKillOrder();
+        secKillOrder.setGoodsId(goods.getId());
+        secKillOrder.setOrderId(orderInfo.getId());
+        secKillOrder.setUserId(user.getId());
+        orderMapper.insertSeckillOrder(secKillOrder);
 
-        redisService.set(OrderKey.getSeckillOrderByUidGid, "" + user.getId() + "_" + goods.getId(), seckillOrder);
+        redisService.set(OrderKey.getSeckillOrderByUidGid, "" + user.getId() + "_" + goods.getId(), secKillOrder);
 
         return orderInfo;
     }

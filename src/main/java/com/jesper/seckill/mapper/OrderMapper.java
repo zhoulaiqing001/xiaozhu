@@ -1,7 +1,7 @@
 package com.jesper.seckill.mapper;
 
 import com.jesper.seckill.bean.OrderInfo;
-import com.jesper.seckill.bean.SeckillOrder;
+import com.jesper.seckill.bean.SecKillOrder;
 import org.apache.ibatis.annotations.*;
 
 /**
@@ -12,7 +12,7 @@ public interface OrderMapper {
 
 
     @Select("select * from sk_order where user_id = #{userId} and goods_id = #{goodsId}")
-    public SeckillOrder getOrderByUserIdGoodsId(@Param("userId") long userId, @Param("goodsId") long goodsId);
+    public SecKillOrder getOrderByUserIdGoodsId(@Param("userId") long userId, @Param("goodsId") long goodsId);
 
 
     /**
@@ -27,7 +27,7 @@ public interface OrderMapper {
 
 
     @Insert("insert into sk_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})")
-    public int insertSeckillOrder(SeckillOrder order);
+    public int insertSeckillOrder(SecKillOrder order);
 
     @Select("select * from sk_order_info where id = #{orderId}")
     public OrderInfo getOrderById(@Param("orderId")long orderId);

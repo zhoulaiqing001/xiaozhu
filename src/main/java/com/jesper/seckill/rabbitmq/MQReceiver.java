@@ -1,6 +1,6 @@
 package com.jesper.seckill.rabbitmq;
 
-import com.jesper.seckill.bean.SeckillOrder;
+import com.jesper.seckill.bean.SecKillOrder;
 import com.jesper.seckill.bean.User;
 import com.jesper.seckill.redis.RedisService;
 import com.jesper.seckill.service.GoodsService;
@@ -48,7 +48,7 @@ public class MQReceiver {
         }
 
         //判断重复秒杀
-        SeckillOrder order = orderService.getOrderByUserIdGoodsId(user.getId(), goodsId);
+        SecKillOrder order = orderService.getOrderByUserIdGoodsId(user.getId(), goodsId);
         if(order != null) {
             return;
         }

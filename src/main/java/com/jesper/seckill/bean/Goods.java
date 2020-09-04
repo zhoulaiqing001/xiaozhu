@@ -1,9 +1,13 @@
 package com.jesper.seckill.bean;
 
-/**
- * Created by jiangyunxiong on 2018/5/22.
- */
-public class Goods {
+import lombok.Data;
+
+import java.io.Serializable;
+
+
+@Data
+public class Goods implements Serializable {
+    private static final long serialVersionUID = -5826632604715782758L;
     private Long id;
     private String goodsName;
     private String goodsTitle;
@@ -11,46 +15,4 @@ public class Goods {
     private String goodsDetail;
     private Double goodsPrice;
     private Integer goodsStock;
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getGoodsName() {
-        return goodsName;
-    }
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-    public String getGoodsTitle() {
-        return goodsTitle;
-    }
-    public void setGoodsTitle(String goodsTitle) {
-        this.goodsTitle = goodsTitle;
-    }
-    public String getGoodsImg() {
-        return goodsImg;
-    }
-    public void setGoodsImg(String goodsImg) {
-        this.goodsImg = goodsImg;
-    }
-    public String getGoodsDetail() {
-        return goodsDetail;
-    }
-    public void setGoodsDetail(String goodsDetail) {
-        this.goodsDetail = goodsDetail;
-    }
-    public Double getGoodsPrice() {
-        return goodsPrice;
-    }
-    public void setGoodsPrice(Double goodsPrice) {
-        this.goodsPrice = goodsPrice;
-    }
-    public Integer getGoodsStock() {
-        return goodsStock;
-    }
-    public void setGoodsStock(Integer goodsStock) {
-        this.goodsStock = goodsStock;
-    }
 }
